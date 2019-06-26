@@ -1,24 +1,8 @@
-
-# coding: utf-8
-
-# In[1]:
-
 from bs4 import BeautifulSoup
-from collections import defaultdict
+from os import listdir
+from os.path import isfile, join
+from json import dumps
 
-
-# In[2]:
-
-path_from = '/Users/edward/Downloads/art/'
-path_to = '/Users/edward/Downloads/'
-
-
-# In[3]:
-
-all_authors = {}
-
-
-# In[13]:
 
 """
 In the script below the html pages with articles are being parsed. It takes as an input the 
@@ -38,9 +22,8 @@ then he is info is updated ( coauthors, articles list, number of publications).
 """
 
 
-# In[12]:
 
-# for each author 
+# for each author:
 # * name - YES
 # * institution YES
 # * coauthors YES
@@ -50,23 +33,20 @@ then he is info is updated ( coauthors, articles list, number of publications).
 # * n papers YES
 
 
-# In[4]:
+print('Inpit path to folder with files to parse:')
+path_from = input()
+print('Inpit path to folder for results:')
+path_to = input()
+all_authors = {}
 
-from os import listdir
-from os.path import isfile, join
 onlyfiles = [f for f in listdir(path_from) if isfile(join(path_from, f))]
 
-
-# In[5]:
-
-def parse_doc(path): #path ='savedrecs.html'
+def parse_doc(path):
     soup = BeautifulSoup(open(path, encoding='utf-8'), "html.parser")
     lines = soup.find_all("hr") 
     for i in range(len(lines)):
-        get_filled(i,lines)
+        get_filled(i, lines)
 
-
-# In[6]:
 
 def get_filled(k,lines):
     article = lines[k].find_next()
@@ -100,16 +80,16 @@ def get_filled(k,lines):
         for k in range(len(authors_full)):
             for group in list(auth_ints.keys()):
                 if authors_full[k] in group or authors[k] in group:
-                    authors_with_inst.append(authors_full[k] +'--'+auth_ints[group] )
+                    authors_with_inst.append(authors_full[k] + '--' + auth_ints[group] )
                     break  
         authors_with_inst_short = []
         for k in range(len(authors_full)):
             for group in list(auth_ints.keys()):
                 if authors_full[k] in group or authors[k] in group:
-                    authors_with_inst_short.append(authors_full[k] +'--'+auth_ints[group].split(',')[0] )
-                    break                      
-        #print(authors_with_inst)
-        total_authors  = dict(zip(authors_with_inst_short, authors_with_inst))
+                    authors_with_inst_short.append(authors_full[k] + '--' + auth_ints[group].split(',')[0] )
+                    break
+
+        total_authors = dict(zip(authors_with_inst_short, authors_with_inst))
         try:
             title = article.find(text="TI ").find_next().get_text()
         except:
@@ -137,42 +117,16 @@ def get_filled(k,lines):
                 all_authors[i]=to_add    
     except:
         pass
-#         print(article)
-#         print('----')
 
 
-# In[7]:
-
-# LONGEST PART - LIMIT HERE TO TEST
-for doc  in onlyfiles:
+for doc in onlyfiles:
     parse_doc(path_from+doc)
-
-
-# In[8]:
 
 for i in list(all_authors.keys()):
     all_authors[i]['coauthors']=list(all_authors[i]['coauthors'])
 
-
-# In[10]:
-
-from json import dumps
 json = dumps(list(all_authors.values()))
-f = open(path_to+"authors_wos.json","w")
+f = open(path_to+"authors_wos.json", "w")
 f.write(json)
 f.close()
-
-# from json import dumps
-# json = dumps(all_authors)
-# f = open("authors_wos.json","w")
-# f.write(json)
-# f.close()
-
-
-# In[11]:
-
-# for i in all_authors.keys():
-#     if all_authors[i]['num_articles']>1:
-#         print(all_authors[i])
-        
 
