@@ -3,6 +3,10 @@
 from tqdm import tqdm
 import json
 
+"""
+In the script below unique titles of parsed articles are being extracted from json file.
+"""
+
 print('Inpit path to folder for data and results:')
 path_to = input()
 

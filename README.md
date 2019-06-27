@@ -42,7 +42,7 @@ After a search query we have a such representation:
 Firstly we found that even with visual limit of scroll over pages ("1 of 10,000" in picture)
 there possible to iterate over all (38,672,622) results inside article. After this remark
 with selenium was created a script to scrape necessary information from article page. 
-At this step we met such as issues as: changeable xpaths, different numbers of authors and 
+At this step we faced such as issues as: changeable xpaths, different numbers of authors and 
 keywords, slow page loading (each such page loads min 0.2 sec ~ 208 days for one loop over
 all articles) 
 and etc (details about problems are in *.ipynb file). Article page example:
@@ -60,6 +60,61 @@ HSE e-library resources).
 
 **Second try (partially successful)**
 
+After a discussion of required information we decided to use standard WoS "Export..." function:
 
+![](https://psv4.userapi.com/c848036/u167940720/docs/d3/28e2b7de7cd5/image_2019-06-27_04-53-15.png?extra=DndotBtBOf6nO4NTMNIPAJpRrw3iDJK2AmA3gEK5v5W5jCiS4JrcQPHRL5lBQH9TwSkQG1e57kBkkHhevdvisLtuWuufdnKpI6StCz36IV1JHrSz9RPQEYqoivDqLW8zvXLqCSCLEniHk_6zYd8A2qUh1sg)
+
+Now we could collect ~99,000 articles per query by looping over different records.
+It takes approximately 4-5 hours to collect data by one search query. Main interesting issue
+that we faced while tried to scrape this elements was divs protection with stochastic components.
+It required to use additional html text search tricks.
 
 ### Parsing
+After "second try" operation of scraping data we had N HTML files with data about articles:
+
+![](https://psv4.userapi.com/c848232/u167940720/docs/d8/45863a3b4de6/image_2019-06-27_08-03-29.png?extra=lNjHIBpFz8tO-M-0_B91-k9ayviqbY6YaHP-LN_BnOkl16OdTJP34nl78LwEME5jDzyMAEAyLPWwPxx5plI4Xgm6WftGeTho8wM4W3HG5hPlGutpLR6ifcvm279otltGyVQT8is51QQYl7V8CcEL4bK8GpM)
+
+We compared this template with an article’s wos page and founded out that:
+* "AU" stands for authors;
+* "TI" stands for title;
+* "DA" stands for date;
+* "SO" stands for source;
+* "PG" stands for number of pages;
+* "TC" stands for number of citations;
+* "DI" stands for DOI;
+* "AB" stands for abstract (short description);
+* "DE" stands for authors keywords;
+* "LA" stands for language;
+* "PU" stands for publisher;
+* "CT" stands for conference name;
+* "CY" stands for conference date;
+* "CR" stands for work links.
+
+Unfortunately, we do not have authorID and link information in our downloaded HTML articles. 
+Also, WoS does not provide information about sponsors.
+We parsed downloaded html articles information via BeautifulSoup module.
+When we parse new articles, we also check their uniqueness. 
+This is done in “Parsing_articles.py” script.
+
+During our project we had two additional tasks: to parse information about journals and authors. 
+To do so we should first get a list of all journals mentioned in parsed articles. 
+So, we got journals title from json articles and dropped any duplicates. 
+This is done in “Parse_journals.py” script.
+
+For authors created a script "Parsing_authors.py", that takes as an input the 
+folder with all HTML pages (each contains 500 articles). 
+For each page the following info is available:
+ * Name;
+ * Institution;
+ * Coauthors;
+ * Papers with coauthors;
+ * Number of papers.
+
+To identify researches and prevent collisions - the pair of Name and Surname + first part of institution 
+(till the comma) was used. 
+Script iterates over articles and  creates a value for each author;
+It checks  whether a researched is already added or not, and if he was added to dict previously,
+then he is info is updated (coauthors, articles list, number of publications).
+
+### Results
+

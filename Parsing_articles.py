@@ -8,6 +8,30 @@ import glob
 import os
 import json
 
+"""
+In the script below the html pages with articles are being parsed. It takes as an input the 
+folder with all html pages (each contains 500 articles). For each page the following info is available:
+    * authors
+    * title
+    * date
+    * source
+    * number of pages
+    * number of citations
+    * DOI
+    * short description
+    * keywords
+    * language
+    * publisher
+    * conference name
+    * conference date
+    * work links
+
+AuthorID, link information and sponsors are not avaliable
+
+Script iterates over articles and parse them;
+It drops duplicates afterall.
+"""
+
 print('Inpit path to folder with files to parse:')
 path_from = input()
 print('Inpit path to folder for results:')
