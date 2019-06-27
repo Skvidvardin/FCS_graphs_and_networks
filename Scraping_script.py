@@ -3,11 +3,20 @@ from time import sleep
 from tqdm import tqdm
 import os
 
+"""
+In the script below we log-in to WoS page through HSE account that specified by user and search at WoS
+main page query also specified by user. Also user setup time for automatic update delay. 
+After search we navigate to download page of WoS articles and in loop query download of 500 articles 
+each step until data is collected. Operation repeats (without user interventions) until interrupt.
+
+Output folder is a standard output folder of Chrome browser.
+"""
+
 try:
     driver = webdriver.Chrome(executable_path=os.path.join(os.getcwd(), 'utils/chromedriver'))
     driver.get("http://proxylibrary.hse.ru:2048/login?url=http://isiknowledge.com/wos")
 except:
-    print('chromedriver not found or hse proxylibrary page not available (http://proxylibrary.hse.ru:2048/login?url=http://isiknowledge.com/wos)')
+    print('chromedriver not found or hse proxylibrary page not available: http://proxylibrary.hse.ru:2048/login?url=http://isiknowledge.com/wos')
 
 
 def OpenWoSandSearch(driver):
@@ -69,9 +78,7 @@ def OneFileLoader(startPage, endPage):
     return -1
 
 
-def WoSArticlesLoader(driver):
-
-    articlesNumber = OpenWoSandSearch(driver)
+def WoSArticlesLoader(driver, articlesNumber):
 
     if articlesNumber > 99000:
         return ('articlesNumber should not be more than 99000. Please restart with lover ammount.')
@@ -93,8 +100,13 @@ def WoSArticlesLoader(driver):
     except:
         print('Some issue appeared and articles from {0} to {1} not downloaded'.format(load * 500, (load + 1) * 500))
 
-    return print('Success (files are in your download folder)')
+    return print('Success (files are in your downloads folder)')
 
 
 if __name__ == '__main__':
-    WoSArticlesLoader(driver)
+    articlesNumber = OpenWoSandSearch(driver)
+    print('Waht time need to sleep after download untill another? Please, specify in seconds:')
+    t = int(input())
+    while True:
+        WoSArticlesLoader(driver, articlesNumber)
+        sleep(t)

@@ -16,12 +16,10 @@ folder with all html pages (each contains 500 articles). For each page the follo
 To identify researches and prevent collisions - the pair of Name and Surname + first part of institution 
 (till the comma) is used. 
 
-Script iterates over articles and  creates a value for each author ,
+Script iterates over articles and  creates a value for each author;
 It checks  whether a researched is already added or not, and if he was added to dict previously,
-then he is info is updated ( coauthors, articles list, number of publications).
+then he is info is updated (coauthors, articles list, number of publications).
 """
-
-
 
 # for each author:
 # * name - YES
