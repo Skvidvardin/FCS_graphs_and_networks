@@ -120,9 +120,9 @@ then he is info is updated (coauthors, articles list, number of publications).
 
 **How much of database we scraped?**
 
-In total we scraped for our analysis more than 360,000 articles (0,4% of whole dataset). 
-After processing and data cleaning we have _ unique articles in .json format 
-(0,4% of whole dataset). 
+In total we scraped for our analysis more than ~360,000 articles (0,4% of whole database). 
+After processing and data cleaning we have ~250,000 unique articles in .json format 
+(~0,3% of whole database). 
 
 **How collisions were solved?**
 
