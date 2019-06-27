@@ -136,7 +136,9 @@ and search requires polynomial time.
 
 **How much will it need to scrape the whole database (in days)?**
 
-It is impossible in current conditions. To collect major part of database need aproximatley
-(it also depends on quality of quires)
+It is impossible in current conditions. To collect major part of database need aproximatley 200 days. 
+It is very rough estimation and final answer depends on quality of quires and other parameters.
 
-**How well data maintenace (update) is roganized?**
+**How well data maintenance (update) is organized?**
+
+Currently update is organized as delay function after download and processing (for no possibility of overlapping).
