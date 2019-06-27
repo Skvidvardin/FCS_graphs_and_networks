@@ -40,10 +40,26 @@ After a search query we have a such representation:
 **First try (unsuccessful)**
 
 Firstly we found that even with visual limit of scroll over pages ("1 of 10,000" in picture)
-there possible to 
+there possible to iterate over all (38,672,622) results inside article. After this remark
+with selenium was created a script to scrape necessary information from article page. 
+At this step we met such as issues as: changeable xpaths, different numbers of authors and 
+keywords, slow page loading (each such page loads min 0.2 sec ~ 208 days for one loop over
+all articles) 
+and etc (details about problems are in *.ipynb file). Article page example:
 
+![](https://psv4.userapi.com/c848032/u167940720/docs/d8/6da13a161029/image_2019-06-27_04-36-10.png?extra=BIeYHXFi21yeBUreGdNd3cKFpw84QLLuh0piktVkEAz8J89_PVTD_OowOgtNthWm3eSzFvudssuk0OVbLd6OVGbbsWPnt4QWJDITmfP-Icev7Sb7rA_K0jo_kpKl5tBo-GZ_MYsY7ZL8DhTyLVn50gS2KtM)
+
+We overcome these issues and created
+high detailed review of scraped and parsed articles, but WoS blocked all quires for account
+to articles with id > 1000 after several (each time different) iterations. Then we designed a 
+system of different IPs VPN servers connect but WoS was blocking by login not IP.
+
+Last attempt was to use login in from different machines with different IPs, but it also failed.
+HSE gave a permanent block to account (now Maksim Pershin does not have an account to connect 
+HSE e-library resources). 
 
 **Second try (partially successful)**
+
 
 
 ### Parsing
