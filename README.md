@@ -1,6 +1,6 @@
 # Network Science
 
-**Done by:** Aunts Edward, Pershin Maksim, Sukhanova Elina
+**Done by:** Aunts Edward, Volkova Evgenia, Pershin Maksim, Sukhanova Elina
 
 This repository contains:
 * WoS_scraping_research.ipynb - Research notebook with some experiments and tries of 
@@ -121,8 +121,8 @@ then he is info is updated (coauthors, articles list, number of publications).
 **How much of database we scraped?**
 
 In total we scraped for our analysis more than ~360,000 articles (0,4% of whole database). 
-After processing and data cleaning we have ~250,000 unique articles in .json format 
-(~0,3% of whole database). 
+After processing and data cleaning we have ~250,000 and ~226,000 unique articles and researchers  in .json format.
+(~0,3% of whole database).
 
 **How collisions were solved?**
 
