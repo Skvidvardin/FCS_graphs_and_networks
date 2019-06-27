@@ -118,3 +118,25 @@ then he is info is updated (coauthors, articles list, number of publications).
 
 ### Results
 
+**How much of database we scraped?**
+
+In total we scraped for our analysis more than 360,000 articles (0,4% of whole dataset). 
+After processing and data cleaning we have _ unique articles in .json format 
+(0,4% of whole dataset). 
+
+**How collisions were solved?**
+
+If we in situation of several queries to WoS database with intersecting set of articles, it
+requires to check each-with-each from different queries for duplicates detection and removing.
+
+**What is the access, add, remove, search complexity in presented data structure?**
+
+Data is in .json format. Access, add, remove operations requires constant time to execution
+and search requires polynomial time.
+
+**How much will it need to scrape the whole database (in days)?**
+
+It is impossible in current conditions. To collect major part of database need aproximatley
+(it also depends on quality of quires)
+
+**How well data maintenace (update) is roganized?**
